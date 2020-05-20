@@ -35,9 +35,31 @@ namespace LabelUs
             // Create source
             BitmapImage myBitmapImage = new BitmapImage();
 
+            // Get image file path
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "Document"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG Image (.png)|*.png"; // Filter files by extension
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            string filename="";
+            if (result == true)
+            {
+                // Open document
+                filename = dlg.FileName;
+            }
+            else {
+                Console.WriteLine("Can't get image file path");
+            }
+
             // BitmapImage.UriSource must be in a BeginInit/EndInit block
             myBitmapImage.BeginInit();
-            myBitmapImage.UriSource = new Uri(@"C:\Users\Administrator.000\Pictures\总体直方图.png");
+            //myBitmapImage.UriSource = new Uri(@"C:\Users\Administrator.000\Pictures\总体直方图.png");
+            myBitmapImage.UriSource = new Uri(filename);
 
             // To save significant application memory, set the DecodePixelWidth or
             // DecodePixelHeight of the BitmapImage value of the image source to the desired
@@ -55,7 +77,7 @@ namespace LabelUs
 
         private void closeWindow_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }
